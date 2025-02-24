@@ -1,0 +1,35 @@
+.categorie-container
+    display: grid
+    grid-template-columns: repeat(5,1fr)
+    gap: 1rem
+
+button
+    padding: 0.8rem 1.55rem
+    background: none
+    cursor: pointer
+    border: 1px solid #343434
+    transition: background 0.2s ease-in-out,color 0.2s ease-in-out
+
+button[disabled]
+    background: #bbbbbb
+    cursor: auto
+
+.filter-catégories
+    margin: 1rem 0
+    display: flex
+    align-items: center
+    gap: 1rem
+    .filter
+        &:hover
+            background: #000
+            color: #fff
+    .active
+        background: #0d8680
+        border: 1px solid #0d8680
+        color: #fff
+        &:hover
+            background: #0d8680
+            color: #fff
+label
+    width: 5rem
+    display: inline-flex

@@ -1,0 +1,79 @@
+<div class="article-form">
+  <h2>Ajouter un article</h2>
+  <form (ngSubmit)="addArticle()" #articleForm="ngForm">
+    <div>
+      <label for="title">Titre :</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        [(ngModel)]="newArticle().title"
+        required
+      />
+    </div>
+    <div>
+      <label for="content">Contenu :</label>
+      <textarea
+        id="content"
+        name="content"
+        [(ngModel)]="newArticle().content"
+        required
+      ></textarea>
+    </div>
+    <div>
+      <label for="categorie">Catégorie :</label>
+      <select
+        id="categorie"
+        name="categorie"
+        [(ngModel)]="newArticle().categorieId"
+        required
+      >
+        @for (categorie of categories(); track categorie._id) {
+        <option
+          value="{{ categorie._id }}"
+          [selected]="categories()[0]._id == categorie._id"
+        >
+          {{ categorie.name }}
+        </option>
+        }
+      </select>
+    </div>
+    <button
+      style="margin-top: 1rem"
+      type="submit"
+      [disabled]="articleForm.invalid"
+    >
+      Ajouter
+    </button>
+  </form>
+</div>
+
+<app-categories (newCategorieEvent)="addNewCategorie($event)" />
+<br />
+<h2>Filter by catégorie</h2>
+<div class="filter-catégories">
+  @for (categorie of categories(); track categorie._id) {
+  <button
+    class="filter"
+    [ngClass]="{ active: filterCategory() == categorie._id }"
+    (click)="filterByCategory(categorie._id)"
+  >
+    {{ categorie.name }}
+  </button>
+  }
+</div>
+<br />
+<h2>List of articles!</h2>
+<div class="categorie-container">
+  @for (article of articles() | filterByCategorie: filterCategory(); track
+  article._id) {
+  <div>
+    <h3>{{ article.title }}</h3>
+    <p>{{ article.content }}</p>
+    @if (article.categorie) {
+    <p>Catégorie : {{ article.categorie.name }}</p>
+    }
+    <button (click)="deleteArticle(article._id)">Supprimer</button>
+  </div>
+  }
+</div>
